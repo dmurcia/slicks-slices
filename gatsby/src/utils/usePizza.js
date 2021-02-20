@@ -50,9 +50,7 @@ export default function usePizza({ pizzas, values }) {
         },
         body: JSON.stringify(body)
     });
-    console.log("res :>>", res);
     const text = JSON.parse(await res.text());
-    console.log("text :>>", text);
     // Check if everything worked
     if (res.status >= 400 && res.status <= 600) {
       setLoading(false); // Turn off loading
