@@ -40,14 +40,13 @@ function wait(ms) {
 } 
 
 
-exports.handler = async (event, context) => {
-  const body = JSON.parse(event.body);
+module.exports = async (req, res) => {
+  const { body } = req;
   // Check if they have filled out the honeypot
   if (body.mapleSyrup) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ message: 'Boop beep bop good bye' })
-    }
+    return res.status(400).json({
+      message: 'Boop beep bop good bye'
+    })
   }
   
   // Validate the data coming in is correct
@@ -55,23 +54,17 @@ exports.handler = async (event, context) => {
 
   for (const field of requiredFields) {
     if (!body[field]) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ 
-          message: `Oops! You are missing the ${field} field`
-        })
-      }
+      return res.status(400).json({
+        message: `Oops! You are missing the ${field} field`
+      })
     }
   }
 
   // Make sure they actually have item in that order
   if (!body.order.length) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ 
-        message: `You order nothing?`
-      })
-    }
+    return res.status(400).json({
+      message: `You order nothing?`
+    });
   }
   // Sent the email
 
@@ -84,8 +77,7 @@ exports.handler = async (event, context) => {
     subject: "New Order!",
     html: generateOrderEmail({ order: body.order, total: body.total })
   });
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: 'Success' })
-  }
+  return res.status(200).json({
+    message: 'Success'
+  });
 }

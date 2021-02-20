@@ -75,3 +75,4 @@ yarn-error.log
 .yarn-integrity
 
 finished-files-before-record/
+.vercel
