@@ -3,8 +3,8 @@ import { ItemsGrid, ItemStyles } from '../styles/Grids';
 
 export default function ItemGrid({ items }) {
   return <ItemsGrid>
-    { items.map(item => (
-      <ItemStyles>
+    { items.map((item) => (
+      <ItemStyles key={`${item._id}`}>
         <p>
           <span className="mark">{item.name}</span>
         </p>
